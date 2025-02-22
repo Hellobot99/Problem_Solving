@@ -8,46 +8,18 @@
 using namespace std;
 
 long long three(vector<long long>list) {
-    int min = list[0] + list[1] + list[2];
-    if (min > list[0] + list[3] + list[4]) min = list[0] + list[3] + list[4];
-    if (min > list[0] + list[2] + list[4]) min = list[0] + list[4] + list[2];
-    if (min > list[0] + list[1] + list[3]) min = list[0] + list[1] + list[3];
-    if (min > list[5] + list[1] + list[2]) min = list[5] + list[1] + list[2];
-    if (min > list[5] + list[1] + list[3]) min = list[5] + list[1] + list[3];
-    if (min > list[4] + list[5] + list[2]) min = list[5] + list[4] + list[2];
-    if (min > list[3] + list[4] + list[5]) min = list[3] + list[4] + list[5];
-    long long q = 4 * (long long)min;
-    return q;
+    long long m = min({ list[3] + list[4] + list[5],list[4] + list[5] + list[2],list[5] + list[1] + list[3],list[5] + list[1] + list[2],list[0] + list[1] + list[2], list[0] + list[3] + list[4], list[0] + list[2] + list[4], list[0] + list[1] + list[3] });
+    return 4 * m;
 }
 
 long long two(vector<long long>list, long long N) {
-    int min = list[0] + list[1];
-    if (min > list[0] + list[2]) min = list[0] + list[2];
-    if (min > list[0] + list[3]) min = list[0] + list[3];
-    if (min > list[0] + list[4]) min = list[0] + list[4];
-    if (min > list[1] + list[2]) min = list[1] + list[2];
-    if (min > list[1] + list[3]) min = list[1] + list[3];
-    if (min > list[1] + list[5]) min = list[1] + list[5];
-    if (min > list[4] + list[2]) min = list[4] + list[2];
-    if (min > list[5] + list[2]) min = list[5] + list[2];
-    if (min > list[3] + list[4]) min = list[3] + list[4];
-    if (min > list[3] + list[5]) min = list[3] + list[5];
-    if (min > list[4] + list[5]) min = list[4] + list[5];
-
-    long long q =  8 * (N - 2) * min + 4 * min;
-    return q;
+    long long m = min({ list[4] + list[5],list[3] + list[5],list[3] + list[4],list[5] + list[2],list[4] + list[2],list[1] + list[5],list[1] + list[3],list[1] + list[2],list[0] + list[4],list[0] + list[3],list[0] + list[1],list[0] + list[2] });
+    return 8 * (N - 2) * m + 4 * m;
 }
 
 long long one(vector<long long>list, long long N) {
-    long long min = list[0];
-    if (min > list[1]) min = list[1];
-    if (min > list[2]) min = list[2];
-    if (min > list[3]) min = list[3];
-    if (min > list[4]) min = list[4];
-    if (min > list[5]) min = list[5];
-
-    long long q = 5 * (N - 2) * (N - 2) * min + 4 * (N - 2) * min;
-    return q;
+    long long m = min({ list[0],list[1],list[2],list[3],list[4],list[5]});
+    return 5 * (N - 2) * (N - 2) * m + 4 * (N - 2) * m;
 }
 
 int main() {
