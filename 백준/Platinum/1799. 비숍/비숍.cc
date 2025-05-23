@@ -10,7 +10,7 @@
 using namespace std;
 
 int promising(vector<vector<int>> board, int x, int y, int size) {
-	
+
 	int ox = x, oy = y;
 	if (board[x][y] == 0) return 1;
 	x++;
@@ -61,16 +61,17 @@ void print_arr(vector<vector<int>> board) {
 	}
 }
 
-void solve(vector<pair<int, int>> one, vector<vector<int>> board, int index, int size, int &result, int temp,int one_size) {
+void solve(vector<pair<int, int>> one, vector<vector<int>>& board, int index, int size, int& result, int temp, int one_size) {
 	if (index == 0) {
 		solve(one, board, index + 1, size, result, temp, one_size);
 		board[one[0].first][one[0].second] = 1;
 		solve(one, board, index + 1, size, result, temp + 1, one_size);
+		board[one[0].first][one[0].second] = 0;
 	}
 	else {
 		int x = one[index - 1].first;
-		int y = one[index - 1].second;		
-		
+		int y = one[index - 1].second;
+
 		if (promising(board, x, y, size)) {
 			if (index == one_size) {
 				if (result < temp) {
@@ -81,9 +82,10 @@ void solve(vector<pair<int, int>> one, vector<vector<int>> board, int index, int
 				solve(one, board, index + 1, size, result, temp, one_size);
 				board[one[index].first][one[index].second] = 1;
 				solve(one, board, index + 1, size, result, temp + 1, one_size);
+				board[one[index].first][one[index].second] = 0;
 			}
 		}
-	}	
+	}
 }
 
 
@@ -103,10 +105,10 @@ int main() {
 		return 0;
 	}
 
-	for (int i = 0; i < N; i++) 
+	for (int i = 0; i < N; i++)
 		for (int k = 0; k < N; k++) {
 			cin >> a;
-			if (a == 1 && (i+k) % 2 == 0) {
+			if (a == 1 && (i + k) % 2 == 0) {
 				black.push_back(make_pair(i, k));
 				b++;
 			}
@@ -114,19 +116,19 @@ int main() {
 				white.push_back(make_pair(i, k));
 				w++;
 			}
-		}	
-	
+		}
+
 	if (w != 0) {
 		solve(white, board, 0, N, result, 0, w);
-	}	
+	}
 
 	if (b != 0) {
 		solve(black, board, 0, N, t, 0, b);
 		result += t;
 	}
-	
+
 	cout << result;
-	
-	
+
+
 	return 0;
 }
