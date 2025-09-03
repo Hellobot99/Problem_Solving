@@ -9,7 +9,9 @@
 #include <string>
 using namespace std;
 
-int cal(vector<int> sum, vector<int> arr, int s, int e1, int e2) {
+typedef long long ll;
+
+ll cal(vector<ll> sum, vector<ll> arr, int s, int e1, int e2) {
 	if (s > e1) {
 		if(s > e2){
 			if (e1 > e2) {
@@ -44,17 +46,32 @@ int cal(vector<int> sum, vector<int> arr, int s, int e1, int e2) {
 	}
 }
 
-void solve(vector<int> sum, vector<int> arr, int N) {
-	int e, m = 0;
+void solve(vector<ll> sum, vector<ll> arr, int N) {
+	ll m = 0;
+	ll e;
 	for (int i = 0; i < N; i++) {
-		for (int k = 0; k < N; k++) {
-			if (i == k) continue;
-			for (int j = 0; j < N; j++) {
-				if (k == j) continue;
-				e = cal(sum, arr, i, j, k);
-				//cout << e << ";" << endl;
+		if (i == 0) {
+			//0 k N-1
+			for (int k = 1; k < N - 1; k++) {
+				e = sum[k - 1] + sum[N - 2] - arr[k];
 				if (e > m) m = e;
 			}
+			//cout << e << "a" << endl;
+		}
+		else if (i == N - 1) {
+			//0 k N-1
+			for (int k = 1; k < N - 1; k++) {
+				e = sum[i] - sum[k] + sum[i] - sum[0] - arr[k];
+				if (e > m) m = e;
+			}
+			//cout << e << "b" << endl;
+		}
+		else {
+			//0 i N-1
+			e = sum[N - 2] - sum[0] + arr[i];
+			if (e > m) m = e;
+			//cout << e << "c" << endl;
+
 		}
 	}
 
@@ -66,10 +83,11 @@ int main() {
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int N, a;
+	int N;
+	ll a;
 	cin >> N;
-	vector<int> arr;
-	vector<int> sum;
+	vector<ll> arr;
+	vector<ll> sum;
 	
 	for (int i = 0; i < N; i++) {
 		cin >> a;
